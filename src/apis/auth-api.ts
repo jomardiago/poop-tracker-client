@@ -9,7 +9,7 @@ type RegisterRequest = {
 
 const register = (data: RegisterRequest) => {
   return api
-    .post("/auth/regsiter", data)
+    .post("/auth/register", data)
     .then((response) => response.data)
     .catch((error) => {
       throw error.response.data;

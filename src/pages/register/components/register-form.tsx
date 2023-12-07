@@ -12,7 +12,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { useRegisterMutation } from "@/apis/auth-api";
+import { Loader } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -36,6 +38,7 @@ export const RegisterForm = () => {
     },
   });
   const register = useRegisterMutation();
+  const { toast } = useToast();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     register.mutate(values, {
@@ -43,7 +46,11 @@ export const RegisterForm = () => {
         console.log(data);
       },
       onError: (error) => {
-        console.log(error);
+        toast({
+          title: "Register user.",
+          description: error.message,
+          variant: "destructive",
+        });
       },
     });
   };
@@ -98,7 +105,10 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={register.isPending}>
+          {register.isPending && (
+            <Loader className="w-4 h-4 mr-2 animate-spin" />
+          )}
           Login
         </Button>
       </form>
