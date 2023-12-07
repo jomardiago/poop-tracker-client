@@ -80,4 +80,8 @@ body,
   body {
     @apply bg-stone-100 text-foreground;
   }
+
+  .link {
+    @apply font-bold underline underline-offset-2;
+  }
 }
