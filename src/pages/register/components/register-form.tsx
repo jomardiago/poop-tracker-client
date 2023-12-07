@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRegisterMutation } from "@/apis/auth-api";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -34,9 +35,17 @@ export const RegisterForm = () => {
       password: "",
     },
   });
+  const register = useRegisterMutation();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    register.mutate(values, {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
   };
 
   return (
