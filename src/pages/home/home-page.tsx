@@ -1,8 +1,10 @@
+import MainLayout from "@/layouts/main/main-layout";
+
 const HomePage = () => {
   return (
-    <div>
+    <MainLayout>
       <span>Home Page</span>
-    </div>
+    </MainLayout>
   );
 };
 
