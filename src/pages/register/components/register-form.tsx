@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,8 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useRegisterMutation } from "@/apis/auth-api";
 import { Loader } from "lucide-react";
+import useSessionStore from "@/stores/session-store";
+import PATHS from "@/lib/paths";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -39,11 +42,14 @@ export const RegisterForm = () => {
   });
   const register = useRegisterMutation();
   const { toast } = useToast();
+  const { setSession } = useSessionStore();
+  const navigate = useNavigate();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     register.mutate(values, {
       onSuccess: (data) => {
-        console.log(data);
+        setSession(data);
+        navigate(PATHS.root);
       },
       onError: (error) => {
         toast({
