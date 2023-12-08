@@ -1,8 +1,10 @@
+import AuthLayout from "@/layouts/auth/auth-layout";
+
 const LoginPage = () => {
   return (
-    <div>
+    <AuthLayout>
       <span>Login Page</span>
-    </div>
+    </AuthLayout>
   );
 };
 

@@ -1,10 +1,21 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import poopLogo from "@/assets/poop-black.svg";
 import { Separator } from "@/components/ui/separator";
 import PATHS from "@/lib/paths";
+import useSessionStore from "@/stores/session-store";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+  const { session } = useSessionStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (session) {
+      navigate(PATHS.root);
+    }
+  }, [session, navigate]);
+
   return (
     <div className="relative">
       <div className="absolute top-0 p-4">
