@@ -1,9 +1,11 @@
 import { useCreateNewEntryMutation } from "@/apis/poop-api";
 import poopLogo from "@/assets/poop-black.svg";
 import { useToast } from "@/components/ui/use-toast";
+import useSessionStore from "@/stores/session-store";
 
 export const AddPoopEntry = () => {
-  const create = useCreateNewEntryMutation();
+  const { session } = useSessionStore();
+  const create = useCreateNewEntryMutation(session?.id);
   const { toast } = useToast();
 
   const createHandler = () => {
