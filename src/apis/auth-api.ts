@@ -9,6 +9,8 @@ type RegisterRequest = {
   password: string;
 };
 
+type LoginRequest = Omit<RegisterRequest, "email">;
+
 const register = (data: RegisterRequest): Promise<Session> => {
   return api
     .post("/auth/register", data)
@@ -18,9 +20,27 @@ const register = (data: RegisterRequest): Promise<Session> => {
     });
 };
 
+const login = (data: LoginRequest): Promise<Session> => {
+  return api
+    .post("/auth/login", data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
 export const useRegisterMutation = () => {
   return useMutation({
     mutationFn: register,
+    onError: (error: { message: string }) => {
+      return error;
+    },
+  });
+};
+
+export const useLoginMutation = () => {
+  return useMutation({
+    mutationFn: login,
     onError: (error: { message: string }) => {
       return error;
     },

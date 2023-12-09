@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { useRegisterMutation } from "@/apis/auth-api";
+import { useLoginMutation } from "@/apis/auth-api";
 import { Loader } from "lucide-react";
 import useSessionStore from "@/stores/session-store";
 import PATHS from "@/lib/paths";
@@ -23,37 +23,33 @@ const formSchema = z.object({
   username: z.string().min(1, {
     message: "Username is required.",
   }),
-  email: z.string().email({
-    message: "Invalid email.",
-  }),
   password: z.string().min(1, {
     message: "Password is required.",
   }),
 });
 
-export const RegisterForm = () => {
+export const LoginForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      email: "",
       password: "",
     },
   });
-  const register = useRegisterMutation();
+  const login = useLoginMutation();
   const { toast } = useToast();
   const { setSession } = useSessionStore();
   const navigate = useNavigate();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    register.mutate(values, {
+    login.mutate(values, {
       onSuccess: (data) => {
         setSession(data);
         navigate(PATHS.root);
       },
       onError: (error) => {
         toast({
-          title: "Register user.",
+          title: "Login user.",
           description: error.message,
           variant: "destructive",
         });
@@ -83,23 +79,6 @@ export const RegisterForm = () => {
         />
         <FormField
           control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="masterpooper@email.com"
-                  autoComplete="off"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -111,15 +90,13 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={register.isPending}>
-          {register.isPending && (
-            <Loader className="w-4 h-4 mr-2 animate-spin" />
-          )}
-          Register
+        <Button type="submit" className="w-full" disabled={login.isPending}>
+          {login.isPending && <Loader className="w-4 h-4 mr-2 animate-spin" />}
+          Login
         </Button>
       </form>
     </Form>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

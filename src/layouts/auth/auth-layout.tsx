@@ -6,7 +6,12 @@ import { Separator } from "@/components/ui/separator";
 import PATHS from "@/lib/paths";
 import useSessionStore from "@/stores/session-store";
 
-const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+type Props = {
+  children: React.ReactNode;
+  type: "login" | "register";
+};
+
+const AuthLayout = ({ children, type }: Props) => {
   const { session } = useSessionStore();
   const navigate = useNavigate();
 
@@ -24,17 +29,31 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="bg-white p-4 shadow-md w-full space-y-4">
           <h2 className="text-center text-2xl font-semibold">
-            Create a new account.
+            {type === "register" ? (
+              <>Create a new account.</>
+            ) : (
+              <>Welcome back!</>
+            )}
           </h2>
           <Separator className="bg-gray-100" />
           {children}
-          <p className="text-center text-sm">
-            Already have an account?{" "}
-            <Link to={PATHS.login} className="link">
-              Login
-            </Link>{" "}
-            instead.
-          </p>
+          {type === "register" ? (
+            <p className="text-center text-sm">
+              Already have an account?{" "}
+              <Link to={PATHS.login} className="link">
+                Login
+              </Link>{" "}
+              instead.
+            </p>
+          ) : (
+            <p className="text-center text-sm">
+              Need an account?{" "}
+              <Link to={PATHS.register} className="link">
+                Register
+              </Link>{" "}
+              instead.
+            </p>
+          )}
         </div>
       </div>
     </div>
