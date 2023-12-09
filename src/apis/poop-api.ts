@@ -12,7 +12,7 @@ type MessageResponse = {
 
 type Poop = {
   id: string;
-  entryDate: Date;
+  entryDate: string;
 };
 
 const poopQueryKeys = {
@@ -34,16 +34,12 @@ const createNewEntry = (
 };
 
 const getPoopEntries = (): Promise<Poop[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          id: "0",
-          entryDate: new Date(),
-        },
-      ]);
-    }, 3000);
-  });
+  return api
+    .get("poops", getRequestHeader())
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error.response.data;
+    });
 };
 
 export const useCreateNewEntryMutation = () => {
