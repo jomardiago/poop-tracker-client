@@ -1,9 +1,10 @@
 import MainLayout from "@/layouts/main/main-layout";
+import { AddPoopEntry } from "./components/add-poop-entry";
 
 const HomePage = () => {
   return (
     <MainLayout>
-      <span>Home Page</span>
+      <AddPoopEntry />
     </MainLayout>
   );
 };
