@@ -27,7 +27,7 @@ const AuthLayout = ({ children, type }: Props) => {
         <img src={poopLogo} alt="Poop Logo" className="w-12 h-12" />
       </div>
       <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="bg-white p-4 shadow-md w-full space-y-4">
+        <div className="bg-white p-4 shadow-md w-full space-y-4 rounded-md">
           <h2 className="text-center text-2xl font-semibold">
             {type === "register" ? (
               <>Create a new account.</>

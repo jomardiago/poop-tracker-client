@@ -14,7 +14,7 @@ const createNewEntry = (
   data: CreateNewEntryRequest,
 ): Promise<MessageResponse> => {
   return api
-    .post("/poop", data, getRequestHeader())
+    .post("/poops", data, getRequestHeader())
     .then((response) => response.data)
     .catch((error) => {
       throw error.response.data;
