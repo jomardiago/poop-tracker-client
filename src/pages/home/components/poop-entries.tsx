@@ -1,34 +1,12 @@
 import { format } from "date-fns";
 
-import { useDeletePoopMutation, usePoopEntriesQuery } from "@/apis/poop-api";
+import { usePoopEntriesQuery } from "@/apis/poop-api";
 import useSessionStore from "@/stores/session-store";
-import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { DeletePoopEntry } from "./delete-poop-entry";
 
 export const PoopEntries = () => {
   const { session } = useSessionStore();
   const poops = usePoopEntriesQuery(session?.id);
-  const deletePoop = useDeletePoopMutation(session?.id);
-  const { toast } = useToast();
-
-  const deleteHandler = (id: string) => {
-    deletePoop.mutate(id, {
-      onSuccess: (data) => {
-        toast({
-          title: "Delete poop entry",
-          description: data.message,
-        });
-      },
-      onError: (error) => {
-        toast({
-          title: "Delete poop entry",
-          description: error.message,
-          variant: "destructive",
-        });
-      },
-    });
-  };
 
   return (
     <div className="mt-4">
@@ -47,13 +25,7 @@ export const PoopEntries = () => {
             >
               <div className="flex justify-between items-center">
                 <p>{format(new Date(poop.entryDate), "PP (iiii)")}</p>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => deleteHandler(poop.id)}
-                >
-                  <XIcon className="w-4 h-4 text-red-500" />
-                </Button>
+                <DeletePoopEntry poopId={poop.id} userId={session?.id} />
               </div>
             </li>
           ))}

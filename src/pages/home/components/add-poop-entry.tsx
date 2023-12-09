@@ -16,13 +16,13 @@ export const AddPoopEntry = () => {
       {
         onSuccess: (data) => {
           toast({
-            title: "Create entry",
+            title: "Create poop entry",
             description: data.message,
           });
         },
         onError: (error) => {
           toast({
-            title: "Create entry",
+            title: "Create poop entry",
             description: error.message,
             variant: "destructive",
           });
@@ -34,7 +34,7 @@ export const AddPoopEntry = () => {
   return (
     <div className="bg-white rounded-md shadow-md flex flex-col space-y-4 justify-center items-center p-8">
       <p className="text-sm text-stone-500">
-        Press the poop icon to add today&apos;s entry.
+        Press the poop icon to add today&apos;s poop entry.
       </p>
       <button
         className="border-8 border-stone-500 p-4 rounded-full animate-pulse"

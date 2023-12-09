@@ -71,6 +71,7 @@ export const usePoopEntriesQuery = (userId: string | undefined) => {
   return useQuery({
     queryKey: poopQueryKeys.byUserId(userId),
     queryFn: getPoopEntries,
+    staleTime: Infinity,
   });
 };
 
