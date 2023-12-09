@@ -17,7 +17,7 @@ export const PoopEntries = () => {
       </h2>
 
       {poops.data && poops.data.length > 0 ? (
-        <ul>
+        <ul className="space-y-2">
           {poops.data.map((poop) => (
             <li
               key={poop.id}

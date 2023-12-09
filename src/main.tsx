@@ -29,7 +29,6 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0,
       refetchOnWindowFocus: false,
     },
   },
